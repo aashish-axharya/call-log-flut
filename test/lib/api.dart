@@ -3,18 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ApiTest(),
-    );
-  }
-}
+import 'package:test/saveData.dart';
 
 Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 Future<void> _logOut() async {
@@ -94,6 +83,12 @@ class ApiTestState extends State<ApiTest> {
               setState(() {});
             },
           ),
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SaveData()));
+              },
+              icon: const Icon(Icons.save)),
           Align(
             alignment: Alignment.center,
             child: TextButton(
@@ -118,7 +113,6 @@ class ApiTestState extends State<ApiTest> {
               child: FutureBuilder(
         future: getData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          print(snapshot.data);
           if (snapshot.data == null) {
             return Container(
               child: Center(
